@@ -8,25 +8,25 @@
 <title>Quando è chiusa la scuola</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700;800;900&display=swap">
 <style>
 /* Layout: un foglio a quadretti — scegli la regione, vedi l'anno a colpo d'occhio (10 mesi), poi l'elenco delle chiusure da mettere in agenda.
-   Colori: inchiostro blu (scuola aperta, testo), penna rossa (scuola chiusa), quadretti azzurrini. */
+   Colori del brand Federica Cannata: viola profondo (testo, scuola aperta), magenta (scuola chiusa), quadretti lilla. */
 :root{
-  --paper:#fbfcfe; --grid:#e3e9f3; --ink:#1d2b4f; --ink-soft:#56627f; --line:#cdd6e6;
-  --blue:#2a4fd6; --blue-wash:#e6ecfd; --red:#d23a2f; --red-wash:#fde6e3; --amber:#a86a00; --amber-wash:#fff1d6;
-  --muted:#b7c0d3; --card:#ffffff; --weekend:#f0f3f9;
-  --f-display:"Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
-  --f-body:"Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --paper:#fdfbfe; --grid:#f0ebf7; --ink:#40366d; --ink-soft:#6f6790; --line:#e1d9ee;
+  --blue:#594492; --blue-wash:#efeaf8; --red:#e72b78; --red-wash:#fde8f1; --amber:#8a4fb0; --amber-wash:#f4ebfa;
+  --muted:#c5bdd8; --card:#ffffff; --weekend:#f6f2fb;
+  --f-display:"Mulish", "Helvetica Neue", Arial, sans-serif;
+  --f-body:"Mulish", "Helvetica Neue", Arial, sans-serif;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --paper:#11172a; --grid:#1b2440; --ink:#e7ecfa; --ink-soft:#a2acc6; --line:#2c3758;
-  --blue:#8aa6ff; --blue-wash:#1f2c57; --red:#ff7a6e; --red-wash:#4a1f1f; --amber:#f2b44d; --amber-wash:#3b2c10;
-  --muted:#4a5577; --card:#161e36; --weekend:#18213b; color-scheme:dark }}
+  --paper:#17132a; --grid:#211b3a; --ink:#efeafb; --ink-soft:#b3a9d3; --line:#352c57;
+  --blue:#b6a4f2; --blue-wash:#2a2250; --red:#ff5c9d; --red-wash:#4a1834; --amber:#d39af0; --amber-wash:#352048;
+  --muted:#51487a; --card:#1d1836; --weekend:#221c3e; color-scheme:dark }}
 :root[data-theme="dark"]{
-  --paper:#11172a; --grid:#1b2440; --ink:#e7ecfa; --ink-soft:#a2acc6; --line:#2c3758;
-  --blue:#8aa6ff; --blue-wash:#1f2c57; --red:#ff7a6e; --red-wash:#4a1f1f; --amber:#f2b44d; --amber-wash:#3b2c10;
-  --muted:#4a5577; --card:#161e36; --weekend:#18213b; color-scheme:dark }
+  --paper:#17132a; --grid:#211b3a; --ink:#efeafb; --ink-soft:#b3a9d3; --line:#352c57;
+  --blue:#b6a4f2; --blue-wash:#2a2250; --red:#ff5c9d; --red-wash:#4a1834; --amber:#d39af0; --amber-wash:#352048;
+  --muted:#51487a; --card:#1d1836; --weekend:#221c3e; color-scheme:dark }
 
 body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5;
   background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
@@ -37,7 +37,7 @@ body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-siz
 h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
 header{display:flex;flex-direction:column;gap:10px}
 .eyebrow{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);font-weight:600}
-h1{font-size:clamp(32px,6vw,54px);font-weight:800;line-height:1.02;letter-spacing:-.02em}
+h1{font-size:clamp(32px,6vw,54px);font-weight:900;line-height:1.05;letter-spacing:-.02em}
 h1 .red{color:var(--red);text-decoration:underline;text-decoration-thickness:4px;text-underline-offset:6px;text-decoration-color:color-mix(in srgb,var(--red) 45%,transparent)}
 .lead{max-width:60ch;color:var(--ink-soft);margin:0}
 
@@ -164,7 +164,7 @@ footer a{color:var(--blue)}
   <div class="notes" id="notes"></div>
 
   <footer>
-    <span>Un'idea di Federica Cannata · Visual Time Management</span>
+    <span>Un'idea di <a href="https://www.federicacannata.it" target="_blank" rel="noopener">Federica Cannata</a> · consulente organizzativa e formatrice</span>
     <span>Fonti: delibere regionali e calendari pubblicati (vedi nota sopra)</span>
   </footer>
 </div>
