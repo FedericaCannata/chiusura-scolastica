@@ -1,0 +1,80 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Federica Cannata//Quando e chiusa la scuola//IT
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Scuola chiusa – Calabria 2026/27
+X-WR-TIMEZONE:Europe/Rome
+REFRESH-INTERVAL;VALUE=DURATION:P1D
+X-PUBLISHED-TTL:P1D
+BEGIN:VEVENT
+UID:calabria-2026-27-2026-09-15-0@quando-chiusa-la-scuola
+DTSTAMP:20261110T120000Z
+DTSTART;VALUE=DATE:20260915
+DTEND;VALUE=DATE:20260916
+SUMMARY:Primo giorno di scuola
+DESCRIPTION:Calendario scolastico 2026/27 – Calabria. Ogni scuola può s
+ postare alcuni giorni: verifica il calendario del tuo istituto.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:calabria-2026-27-2026-11-02-1@quando-chiusa-la-scuola
+DTSTAMP:20261110T120000Z
+DTSTART;VALUE=DATE:20261102
+DTEND;VALUE=DATE:20261103
+SUMMARY:Scuola chiusa: Commemorazione dei defunti
+DESCRIPTION:Calendario scolastico 2026/27 – Calabria. Ogni scuola può s
+ postare alcuni giorni: verifica il calendario del tuo istituto.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:calabria-2026-27-2026-12-07-2@quando-chiusa-la-scuola
+DTSTAMP:20261110T120000Z
+DTSTART;VALUE=DATE:20261207
+DTEND;VALUE=DATE:20261209
+SUMMARY:Scuola chiusa: Ponte dell'Immacolata
+DESCRIPTION:Calendario scolastico 2026/27 – Calabria. Ogni scuola può s
+ postare alcuni giorni: verifica il calendario del tuo istituto.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:calabria-2026-27-2026-12-23-3@quando-chiusa-la-scuola
+DTSTAMP:20261110T120000Z
+DTSTART;VALUE=DATE:20261223
+DTEND;VALUE=DATE:20270107
+SUMMARY:Scuola chiusa: Vacanze di Natale
+DESCRIPTION:Calendario scolastico 2026/27 – Calabria. Ogni scuola può s
+ postare alcuni giorni: verifica il calendario del tuo istituto.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:calabria-2026-27-2027-03-25-4@quando-chiusa-la-scuola
+DTSTAMP:20261110T120000Z
+DTSTART;VALUE=DATE:20270325
+DTEND;VALUE=DATE:20270331
+SUMMARY:Scuola chiusa: Vacanze di Pasqua
+DESCRIPTION:Calendario scolastico 2026/27 – Calabria. Ogni scuola può s
+ postare alcuni giorni: verifica il calendario del tuo istituto.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:calabria-2026-27-2027-06-02-5@quando-chiusa-la-scuola
+DTSTAMP:20261110T120000Z
+DTSTART;VALUE=DATE:20270602
+DTEND;VALUE=DATE:20270603
+SUMMARY:Scuola chiusa: Festa della Repubblica
+DESCRIPTION:Calendario scolastico 2026/27 – Calabria. Ogni scuola può s
+ postare alcuni giorni: verifica il calendario del tuo istituto.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:calabria-2026-27-2027-06-08-6@quando-chiusa-la-scuola
+DTSTAMP:20261110T120000Z
+DTSTART;VALUE=DATE:20270608
+DTEND;VALUE=DATE:20270609
+SUMMARY:Ultimo giorno di scuola
+DESCRIPTION:Calendario scolastico 2026/27 – Calabria. Ogni scuola può s
+ postare alcuni giorni: verifica il calendario del tuo istituto.
+TRANSP:TRANSPARENT
+END:VEVENT
+END:VCALENDAR

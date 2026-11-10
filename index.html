@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Calendario scolastico 2026/27 di tutte le regioni italiane: vacanze, ponti e chiusure da aggiungere al tuo calendario.">
+<style>body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+<title>Quando è chiusa la scuola</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&display=swap">
+<style>
+/* Layout: un foglio a quadretti — scegli la regione, vedi l'anno a colpo d'occhio (10 mesi), poi l'elenco delle chiusure da mettere in agenda.
+   Colori: inchiostro blu (scuola aperta, testo), penna rossa (scuola chiusa), quadretti azzurrini. */
+:root{
+  --paper:#fbfcfe; --grid:#e3e9f3; --ink:#1d2b4f; --ink-soft:#56627f; --line:#cdd6e6;
+  --blue:#2a4fd6; --blue-wash:#e6ecfd; --red:#d23a2f; --red-wash:#fde6e3; --amber:#a86a00; --amber-wash:#fff1d6;
+  --muted:#b7c0d3; --card:#ffffff; --weekend:#f0f3f9;
+  --f-display:"Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+  --f-body:"Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#11172a; --grid:#1b2440; --ink:#e7ecfa; --ink-soft:#a2acc6; --line:#2c3758;
+  --blue:#8aa6ff; --blue-wash:#1f2c57; --red:#ff7a6e; --red-wash:#4a1f1f; --amber:#f2b44d; --amber-wash:#3b2c10;
+  --muted:#4a5577; --card:#161e36; --weekend:#18213b; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --paper:#11172a; --grid:#1b2440; --ink:#e7ecfa; --ink-soft:#a2acc6; --line:#2c3758;
+  --blue:#8aa6ff; --blue-wash:#1f2c57; --red:#ff7a6e; --red-wash:#4a1f1f; --amber:#f2b44d; --amber-wash:#3b2c10;
+  --muted:#4a5577; --card:#161e36; --weekend:#18213b; color-scheme:dark }
+
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:22px 22px}
+.wrap{max-width:980px;margin:0 auto;padding-block:28px 48px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);font-weight:600}
+h1{font-size:clamp(32px,6vw,54px);font-weight:800;line-height:1.02;letter-spacing:-.02em}
+h1 .red{color:var(--red);text-decoration:underline;text-decoration-thickness:4px;text-underline-offset:6px;text-decoration-color:color-mix(in srgb,var(--red) 45%,transparent)}
+.lead{max-width:60ch;color:var(--ink-soft);margin:0}
+
+.picker{display:flex;flex-wrap:wrap;gap:12px;align-items:end;background:var(--card);border:1.5px solid var(--ink);border-radius:14px;padding:16px;box-shadow:4px 4px 0 var(--ink)}
+.picker label{display:flex;flex-direction:column;gap:6px;font-weight:600;font-size:13px;flex:1 1 260px;min-width:0}
+select{font:inherit;font-size:17px;font-weight:600;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
+select:focus-visible,a:focus-visible,button:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.status{font-size:13px;padding:6px 10px;border-radius:999px;font-weight:600;align-self:center}
+.status.ok{background:var(--blue-wash);color:var(--blue)}
+.status.check{background:var(--amber-wash);color:var(--amber)}
+
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.stat .k{font-size:12px;color:var(--ink-soft);letter-spacing:.04em;text-transform:uppercase;font-weight:600}
+.stat .v{font-family:var(--f-display);font-size:22px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.2}
+.stat .s{font-size:13px;color:var(--ink-soft)}
+.stat.next{border-color:var(--red);background:var(--red-wash)}
+.stat.next .v{color:var(--red)}
+
+section{display:flex;flex-direction:column;gap:12px}
+.sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+h2{font-size:22px;font-weight:700}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--ink-soft)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:12px;height:12px;border-radius:3px;display:inline-block;border:1px solid var(--line)}
+.sw.open{background:var(--card)} .sw.closed{background:var(--red);border-color:var(--red)} .sw.we{background:var(--weekend)} .sw.out{background:transparent;border-style:dashed}
+
+.months{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.month{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px;min-width:0}
+.month h3{font-size:14px;font-weight:700;margin-bottom:6px;text-transform:capitalize}
+.dgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.dgrid .dow{font-size:10px;color:var(--ink-soft);text-align:center;font-weight:600}
+.d{font-size:11px;text-align:center;border-radius:4px;padding:3px 0;font-variant-numeric:tabular-nums;color:var(--ink)}
+.d.we{background:var(--weekend);color:var(--ink-soft)}
+.d.out{color:var(--muted)}
+.d.closed{background:var(--red);color:#fff;font-weight:600}
+.d.edge{box-shadow:inset 0 0 0 1.5px var(--blue);font-weight:700;color:var(--blue)}
+.d.today{outline:2px solid var(--ink);outline-offset:-1px}
+
+.list{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none}
+.item{display:grid;grid-template-columns:120px 1fr auto;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.item.past{opacity:.55}
+.when{font-family:var(--f-display);font-weight:700;font-size:15px;line-height:1.2;font-variant-numeric:tabular-nums}
+.what{min-width:0;display:flex;flex-direction:column;gap:2px}
+.what b{font-weight:600}
+.meta{font-size:13px;color:var(--ink-soft);display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.chip{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:999px}
+.chip.vacanza{background:var(--red-wash);color:var(--red)}
+.chip.ponte{background:var(--amber-wash);color:var(--amber)}
+.chip.festa{background:var(--blue-wash);color:var(--blue)}
+.chip.lezioni{background:var(--blue);color:var(--card)}
+.add{font-size:13px;font-weight:600;color:var(--blue);text-decoration:none;border:1.5px solid var(--blue);border-radius:999px;padding:6px 12px;white-space:nowrap}
+.add:hover{background:var(--blue-wash)}
+
+.notes{background:var(--card);border:1px dashed var(--ink-soft);border-radius:12px;padding:14px 16px;font-size:14px;color:var(--ink-soft)}
+.notes ul{margin:6px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:4px}
+.notes b{color:var(--ink)}
+footer{font-size:13px;color:var(--ink-soft);border-top:1.5px solid var(--ink);padding-top:14px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+footer a{color:var(--blue)}
+
+@media (max-width:820px){.months{grid-template-columns:repeat(3,minmax(0,1fr))}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.months{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .item{grid-template-columns:1fr;gap:8px}.add{justify-self:start}}
+@media (prefers-reduced-motion:no-preference){.month{transition:border-color .2s}}
+
+.sub{background:var(--card);border:1.5px solid var(--blue);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.sub h2{font-size:20px}
+.sub p{margin:0;color:var(--ink-soft);font-size:14px;max-width:65ch}
+.sub .btns{display:flex;gap:10px;flex-wrap:wrap}
+.sub .btn{font-weight:600;font-size:14px;text-decoration:none;border-radius:999px;padding:9px 16px;border:1.5px solid var(--blue);color:var(--blue)}
+.sub .btn.primary{background:var(--blue);color:var(--card)}
+.sub .btn:hover{filter:brightness(1.05)}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Anno scolastico 2026/2027 · tutte le regioni</span>
+    <h1>Quando è <span class="red">chiusa</span> la scuola?</h1>
+    <p class="lead">Scegli la tua regione: vedi tutto l'anno in una pagina, con vacanze, ponti e festività, e metti le chiusure nel tuo Google Calendar con un clic.</p>
+  </header>
+
+  <div class="picker">
+    <label for="region">La tua regione
+      <select id="region"></select>
+    </label>
+    <span id="status" class="status"></span>
+  </div>
+
+  <div class="stats" id="stats"></div>
+
+  <div class="sub" id="sub">
+    <h2>Tutto l'anno nel tuo calendario, in un clic</h2>
+    <p>Iscriviti al calendario della tua regione: tutte le chiusure compaiono nella tua agenda e, se le date cambiano, si aggiornano da sole.</p>
+    <div class="btns">
+      <a class="btn primary" id="subGoogle" target="_blank" rel="noopener">Iscriviti con Google Calendar</a>
+      <a class="btn" id="subApple">Iscriviti con iPhone / Outlook</a>
+      <a class="btn" id="subFile" download>Scarica il file .ics</a>
+    </div>
+  </div>
+
+  <section>
+    <div class="sec-head">
+      <h2>L'anno a colpo d'occhio</h2>
+      <div class="legend">
+        <span><i class="sw open"></i>lezione</span>
+        <span><i class="sw closed"></i>scuola chiusa</span>
+        <span><i class="sw we"></i>weekend</span>
+        <span><i class="sw out"></i>fuori dall'anno</span>
+      </div>
+    </div>
+    <div class="months" id="months"></div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Da mettere in agenda</h2>
+      <span class="legend">Ogni pulsante apre Google Calendar con l'evento già compilato.</span>
+    </div>
+    <ul class="list" id="list"></ul>
+  </section>
+
+  <div class="notes" id="notes"></div>
+
+  <footer>
+    <span>Un'idea di Federica Cannata · Visual Time Management</span>
+    <span>Fonti: delibere regionali e calendari pubblicati (vedi nota sopra)</span>
+  </footer>
+</div>
+
+<script>
+(function(){
+const PIMM=["2026-12-07","2026-12-08","Ponte dell'Immacolata","ponte"];
+const IMM=["2026-12-08","2026-12-08","Immacolata Concezione","festa"];
+const NOV2=["2026-11-02","2026-11-02","Commemorazione dei defunti","ponte"];
+const X=s=>[s,"2027-01-06","Vacanze di Natale","vacanza"];
+const X7=s=>[s,"2027-01-07","Vacanze di Natale","vacanza"];
+const EAS=["2027-03-25","2027-03-30","Vacanze di Pasqua","vacanza"];
+const EAS31=["2027-03-25","2027-03-31","Vacanze di Pasqua","vacanza"];
+const REP=["2027-06-02","2027-06-02","Festa della Repubblica","festa"];
+const CARN=(a,b,l)=>[a,b,l||"Vacanze di Carnevale","vacanza"];
+const SEC="Date confermate da almeno tre fonti indipendenti (Tuttitalia, Orizzonte Scuola, Studenti.it, Tecnica della Scuola, stampa locale) che riportano la delibera regionale.";
+
+const R={
+ abruzzo:{n:"Abruzzo",s:"2026-09-16",e:"2027-06-09",c:[PIMM,X("2026-12-23"),EAS,REP]},
+ basilicata:{n:"Basilicata",s:"2026-09-16",e:"2027-06-08",c:[IMM,X("2026-12-24"),EAS,REP]},
+ calabria:{n:"Calabria",s:"2026-09-15",e:"2027-06-08",c:[NOV2,PIMM,X("2026-12-23"),EAS,REP]},
+ campania:{n:"Campania",s:"2026-09-15",e:"2027-06-08",c:[NOV2,PIMM,X("2026-12-23"),CARN("2027-02-08","2027-02-09"),EAS,REP]},
+ emilia:{n:"Emilia-Romagna",s:"2026-09-15",e:"2027-06-05",c:[NOV2,IMM,X("2026-12-24"),EAS,REP],x:"Dal 31 agosto alcune primarie offrono attività educative facoltative e gratuite: non sono lezioni."},
+ fvg:{n:"Friuli Venezia Giulia",s:"2026-09-14",e:"2027-06-09",inf:"Infanzia: fine attività sabato 26 giugno 2027.",c:[PIMM,X("2026-12-23"),CARN("2027-02-08","2027-02-10"),EAS,REP]},
+ lazio:{n:"Lazio",s:"2026-09-15",e:"2027-06-08",ok:"Verificato sul sito della Regione Lazio.",c:[IMM,X("2026-12-23"),EAS,REP]},
+ liguria:{n:"Liguria",s:"2026-09-14",e:"2027-06-08",c:[PIMM,X("2026-12-23"),CARN("2027-02-08","2027-02-09"),EAS,REP]},
+ lombardia:{n:"Lombardia",s:"2026-09-14",e:"2027-06-08",ok:"Verificato sulla nota ufficiale di Regione Lombardia.",inf:"Infanzia: inizio lunedì 7 settembre 2026, fine mercoledì 30 giugno 2027.",x:"Il Carnevale indicato è quello di rito romano: nelle zone di rito ambrosiano le date sono diverse.",c:[IMM,X("2026-12-23"),CARN("2027-02-08","2027-02-09"),EAS,REP]},
+ marche:{n:"Marche",s:"2026-09-14",e:"2027-06-05",c:[IMM,X("2026-12-23"),EAS,REP]},
+ molise:{n:"Molise",s:"2026-09-14",e:"2027-06-09",c:[NOV2,PIMM,X("2026-12-23"),CARN("2027-02-08","2027-02-10"),EAS,["2027-05-31","2027-06-02","Ponte del 2 giugno","ponte"]]},
+ piemonte:{n:"Piemonte",s:"2026-09-14",e:"2027-06-10",c:[PIMM,X("2026-12-23"),CARN("2027-02-06","2027-02-10"),EAS,REP]},
+ puglia:{n:"Puglia",s:"2026-09-17",e:"2027-06-08",c:[PIMM,X("2026-12-23"),EAS,REP]},
+ sardegna:{n:"Sardegna",s:"2026-09-16",e:"2027-06-08",c:[IMM,X("2026-12-23"),CARN("2027-02-09","2027-02-09","Martedì grasso"),EAS,["2027-04-28","2027-04-28","Sa Die de sa Sardigna","festa"],REP]},
+ sicilia:{n:"Sicilia",s:"2026-09-15",e:"2027-06-09",ok:"Verificato sul sito della Regione Siciliana e sulla rettifica del 3 agosto 2026 (D.A. 3119), che sposta la fine al 9 giugno.",c:[NOV2,PIMM,X7("2026-12-23"),EAS,REP]},
+ toscana:{n:"Toscana",s:"2026-09-15",e:"2027-06-10",c:[IMM,X("2026-12-24"),EAS,REP]},
+ bolzano:{n:"Provincia di Bolzano",s:"2026-09-07",e:"2027-06-16",x:"Date delle scuole in lingua italiana: le scuole in lingua tedesca e ladina possono avere un calendario diverso.",c:[["2026-11-02","2026-11-06","Vacanze d'autunno","vacanza"],IMM,X("2026-12-24"),CARN("2027-02-08","2027-02-12","Vacanze invernali"),EAS,REP]},
+ trento:{n:"Provincia di Trento",s:"2026-09-10",e:"2027-06-08",ok:"Verificato sul comunicato ufficiale della Provincia (n. 994 del 17 aprile 2026).",inf:"Infanzia: calendario proprio. Ordinario dal 3 settembre 2026 al 30 luglio 2027, turistico dal 5 ottobre 2026 al 31 agosto 2027, speciale dal 17 settembre 2026 al 13 agosto 2027. Chiedi alla tua scuola quale segue.",c:[NOV2,PIMM,X("2026-12-23"),CARN("2027-02-08","2027-02-09"),EAS31,["2027-04-29","2027-04-30","Ponte del 1° maggio","ponte"],REP]},
+ umbria:{n:"Umbria",s:"2026-09-14",e:"2027-06-08",c:[NOV2,PIMM,X("2026-12-23"),EAS,REP]},
+ vda:{n:"Valle d'Aosta",s:"2026-09-10",e:"2027-06-09",c:[NOV2,PIMM,X("2026-12-24"),CARN("2027-02-08","2027-02-10","Vacanze d'inverno"),EAS,REP]},
+ veneto:{n:"Veneto",s:"2026-09-10",e:"2027-06-08",ok:"Verificato sulla delibera regionale (DGR 712 del 7 luglio 2026).",c:[PIMM,X("2026-12-24"),CARN("2027-02-08","2027-02-10","Carnevale e Ceneri"),EAS,["2027-04-29","2027-04-30","Ponte del 1° maggio","ponte"],REP]}
+};
+
+const MONTHS=["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"];
+const DOW=["dom","lun","mar","mer","gio","ven","sab"];
+const D=s=>{const [y,m,d]=s.split("-").map(Number);return new Date(y,m-1,d)};
+const iso=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+const add=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x};
+const fmt=(d,opt)=>{const s=DOW[d.getDay()]+" "+d.getDate()+" "+MONTHS[d.getMonth()];return opt&&opt.y?s+" "+d.getFullYear():s};
+const range=(a,b)=>a===b?fmt(D(a)):(D(a).getMonth()===D(b).getMonth()?D(a).getDate()+"–"+D(b).getDate()+" "+MONTHS[D(b).getMonth()]:D(a).getDate()+" "+MONTHS[D(a).getMonth()].slice(0,3)+" – "+D(b).getDate()+" "+MONTHS[D(b).getMonth()].slice(0,3));
+const weekdays=(a,b)=>{let n=0;for(let d=D(a);d<=D(b);d=add(d,1)){const w=d.getDay();if(w>0&&w<6)n++}return n};
+const today=new Date();today.setHours(0,0,0,0);
+
+function gcal(title,a,b,region,isLesson){
+  const s=a.replace(/-/g,""),e=iso(add(D(b),1)).replace(/-/g,"");
+  const p=new URLSearchParams({action:"TEMPLATE",text:isLesson?title:"Scuola chiusa: "+title,dates:s+"/"+e,
+    details:"Calendario scolastico 2026/27 – "+region+". Verifica sempre il calendario della tua scuola: ogni istituto può spostare qualche giorno."});
+  return "https://calendar.google.com/calendar/render?"+p.toString();
+}
+
+const sel=document.getElementById("region");
+Object.entries(R).sort((a,b)=>a[1].n.localeCompare(b[1].n,"it")).forEach(([k,v])=>{const o=document.createElement("option");o.value=k;o.textContent=v.n;sel.appendChild(o)});
+let start="veneto";try{const s=localStorage.getItem("regione");if(s&&R[s])start=s}catch(e){}
+sel.value=start;
+sel.addEventListener("change",()=>{try{localStorage.setItem("regione",sel.value)}catch(e){}render()});
+
+function render(){
+  const r=R[sel.value];
+  const icsUrl=new URL("ics/"+sel.value+".ics",location.href);
+  const web=location.protocol.startsWith("http");
+  document.getElementById("sub").hidden=!web;
+  if(web){
+    const webcal="webcal://"+icsUrl.host+icsUrl.pathname;
+    document.getElementById("subGoogle").href="https://calendar.google.com/calendar/r?cid="+encodeURIComponent(webcal);
+    document.getElementById("subApple").href=webcal;
+    document.getElementById("subFile").href=icsUrl.pathname;
+  }
+  const closed=new Set();
+  r.c.forEach(([a,b])=>{for(let d=D(a);d<=D(b);d=add(d,1))closed.add(iso(d))});
+  const st=document.getElementById("status");
+  st.className="status "+(r.ok?"ok":"check");st.textContent=r.ok?"✓ Fonte ufficiale":"Confermato da più fonti";
+
+  const totClosed=r.c.reduce((n,[a,b])=>n+weekdays(a,b),0);
+  const upcoming=r.c.map(c=>c).sort((x,y)=>x[0].localeCompare(y[0])).find(([a,b])=>D(b)>=today);
+  let nextHtml='<span class="k">Prossima chiusura</span><span class="v">—</span><span class="s">Anno concluso</span>';
+  if(upcoming){const days=Math.round((D(upcoming[0])-today)/864e5);
+    nextHtml='<span class="k">Prossima chiusura</span><span class="v">'+range(upcoming[0],upcoming[1])+'</span><span class="s">'+upcoming[2]+(days>0?" · tra "+days+(days===1?" giorno":" giorni"):" · in corso")+'</span>'}
+  document.getElementById("stats").innerHTML=
+    '<div class="stat"><span class="k">Primo giorno</span><span class="v">'+D(r.s).getDate()+" "+MONTHS[D(r.s).getMonth()].slice(0,3)+'</span><span class="s">'+DOW[D(r.s).getDay()]+' · 2026</span></div>'+
+    '<div class="stat"><span class="k">Ultimo giorno</span><span class="v">'+D(r.e).getDate()+" "+MONTHS[D(r.e).getMonth()].slice(0,3)+'</span><span class="s">'+DOW[D(r.e).getDay()]+' · 2027</span></div>'+
+    '<div class="stat"><span class="k">Giorni chiusi</span><span class="v">'+totClosed+'</span><span class="s">da lunedì a venerdì</span></div>'+
+    '<div class="stat next">'+nextHtml+'</div>';
+
+  const m=document.getElementById("months");m.innerHTML="";
+  for(let i=0;i<10;i++){
+    const first=new Date(2026,8+i,1),y=first.getFullYear(),mo=first.getMonth();
+    const box=document.createElement("div");box.className="month";
+    let h='<h3>'+MONTHS[mo]+' '+y+'</h3><div class="dgrid">'+["L","M","M","G","V","S","D"].map(x=>'<span class="dow">'+x+'</span>').join("");
+    const off=(first.getDay()+6)%7;for(let k=0;k<off;k++)h+='<span></span>';
+    const last=new Date(y,mo+1,0).getDate();
+    for(let d=1;d<=last;d++){
+      const dt=new Date(y,mo,d),k=iso(dt),w=dt.getDay();let c="d";
+      if(k<r.s||k>r.e)c+=" out";else if(closed.has(k)&&w>0&&w<6)c+=" closed";else if(w===0||w===6)c+=" we";
+      if(k===r.s||k===r.e)c+=" edge";
+      if(dt.getTime()===today.getTime())c+=" today";
+      const tip=closed.has(k)?(r.c.find(([a,b])=>k>=a&&k<=b)||[])[2]:(k===r.s?"Primo giorno di scuola":k===r.e?"Ultimo giorno di scuola":"");
+      h+='<span class="'+c+'"'+(tip?' title="'+tip+'"':'')+'>'+d+'</span>';
+    }
+    box.innerHTML=h+'</div>';m.appendChild(box);
+  }
+
+  const items=[[r.s,r.s,"Primo giorno di scuola","lezioni"],...r.c,[r.e,r.e,"Ultimo giorno di scuola","lezioni"]].sort((a,b)=>a[0].localeCompare(b[0]));
+  const L=document.getElementById("list");L.innerHTML="";
+  const lab={vacanza:"vacanza",ponte:"ponte",festa:"festa",lezioni:"lezioni"};
+  items.forEach(([a,b,t,k])=>{
+    const li=document.createElement("li");li.className="item"+(D(b)<today?" past":"");
+    const wd=weekdays(a,b);
+    const sub=k==="lezioni"?fmt(D(a),{y:1}):(a===b?fmt(D(a),{y:1}):"da "+fmt(D(a))+" a "+fmt(D(b),{y:1}));
+    li.innerHTML='<span class="when">'+range(a,b)+'</span><span class="what"><b>'+t+'</b><span class="meta"><span class="chip '+k+'">'+lab[k]+'</span>'+sub+(k!=="lezioni"&&wd?' · '+wd+(wd===1?' giorno feriale':' giorni feriali'):'')+'</span></span>';
+    const aEl=document.createElement("a");aEl.className="add";aEl.target="_blank";aEl.rel="noopener";
+    aEl.href=gcal(t,a,b,r.n,k==="lezioni");
+    aEl.textContent="+ Google Calendar";li.appendChild(aEl);L.appendChild(li);
+  });
+
+  let n='<b>Prima di organizzarti, leggi qui.</b><ul>';
+  n+='<li>'+(r.ok||SEC)+'</li>';
+  if(r.inf)n+='<li>'+r.inf+'</li>';else n+='<li>Scuola dell\'infanzia: di solito chiude più tardi (in genere il 30 giugno 2027).</li>';
+  if(r.x)n+='<li>'+r.x+'</li>';
+  n+='<li>Manca la <b>festa del santo patrono</b> del tuo comune: è un giorno di chiusura in più.</li>';
+  n+='<li>Ogni scuola può spostare alcuni giorni (ponti in più, recuperi). Il calendario del tuo istituto ha sempre l\'ultima parola.</li></ul>';
+  document.getElementById("notes").innerHTML=n;
+}
+render();
+})();
+</script>
+
+</body>
+</html>

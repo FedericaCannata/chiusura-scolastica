@@ -1,0 +1,70 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Federica Cannata//Quando e chiusa la scuola//IT
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Scuola chiusa – Toscana 2026/27
+X-WR-TIMEZONE:Europe/Rome
+REFRESH-INTERVAL;VALUE=DURATION:P1D
+X-PUBLISHED-TTL:P1D
+BEGIN:VEVENT
+UID:toscana-2026-27-2026-09-15-0@quando-chiusa-la-scuola
+DTSTAMP:20261110T120000Z
+DTSTART;VALUE=DATE:20260915
+DTEND;VALUE=DATE:20260916
+SUMMARY:Primo giorno di scuola
+DESCRIPTION:Calendario scolastico 2026/27 – Toscana. Ogni scuola può sp
+ ostare alcuni giorni: verifica il calendario del tuo istituto.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:toscana-2026-27-2026-12-08-1@quando-chiusa-la-scuola
+DTSTAMP:20261110T120000Z
+DTSTART;VALUE=DATE:20261208
+DTEND;VALUE=DATE:20261209
+SUMMARY:Scuola chiusa: Immacolata Concezione
+DESCRIPTION:Calendario scolastico 2026/27 – Toscana. Ogni scuola può sp
+ ostare alcuni giorni: verifica il calendario del tuo istituto.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:toscana-2026-27-2026-12-24-2@quando-chiusa-la-scuola
+DTSTAMP:20261110T120000Z
+DTSTART;VALUE=DATE:20261224
+DTEND;VALUE=DATE:20270107
+SUMMARY:Scuola chiusa: Vacanze di Natale
+DESCRIPTION:Calendario scolastico 2026/27 – Toscana. Ogni scuola può sp
+ ostare alcuni giorni: verifica il calendario del tuo istituto.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:toscana-2026-27-2027-03-25-3@quando-chiusa-la-scuola
+DTSTAMP:20261110T120000Z
+DTSTART;VALUE=DATE:20270325
+DTEND;VALUE=DATE:20270331
+SUMMARY:Scuola chiusa: Vacanze di Pasqua
+DESCRIPTION:Calendario scolastico 2026/27 – Toscana. Ogni scuola può sp
+ ostare alcuni giorni: verifica il calendario del tuo istituto.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:toscana-2026-27-2027-06-02-4@quando-chiusa-la-scuola
+DTSTAMP:20261110T120000Z
+DTSTART;VALUE=DATE:20270602
+DTEND;VALUE=DATE:20270603
+SUMMARY:Scuola chiusa: Festa della Repubblica
+DESCRIPTION:Calendario scolastico 2026/27 – Toscana. Ogni scuola può sp
+ ostare alcuni giorni: verifica il calendario del tuo istituto.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:toscana-2026-27-2027-06-10-5@quando-chiusa-la-scuola
+DTSTAMP:20261110T120000Z
+DTSTART;VALUE=DATE:20270610
+DTEND;VALUE=DATE:20270611
+SUMMARY:Ultimo giorno di scuola
+DESCRIPTION:Calendario scolastico 2026/27 – Toscana. Ogni scuola può sp
+ ostare alcuni giorni: verifica il calendario del tuo istituto.
+TRANSP:TRANSPARENT
+END:VEVENT
+END:VCALENDAR
