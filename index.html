@@ -112,6 +112,7 @@ footer a{color:var(--blue)}
 .sub .btn:hover{filter:brightness(1.05)}
 </style>
 
+<script data-goatcounter="https://chiusurascolatica.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -299,5 +300,18 @@ render();
 })();
 </script>
 
+<script>
+(function(){
+function gc(p){try{if(window.goatcounter&&window.goatcounter.count)window.goatcounter.count({path:p,title:p,event:true})}catch(e){}}
+var sel=document.getElementById("region");
+sel.addEventListener("change",function(){gc("regione/"+sel.value)});
+document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a");if(!a)return;var r=sel.value;
+ if(a.id==="subGoogle")gc("iscrizione/google/"+r);
+ else if(a.id==="subApple")gc("iscrizione/apple-outlook/"+r);
+ else if(a.id==="subFile")gc("scarica-ics/"+r);
+ else if(a.classList.contains("add"))gc("evento-singolo/"+r);
+});
+})();
+</script>
 </body>
 </html>
