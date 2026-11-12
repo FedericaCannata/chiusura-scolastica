@@ -98,6 +98,22 @@ h2{font-size:22px;font-weight:700}
 footer{font-size:13px;color:var(--ink-soft);border-top:1.5px solid var(--ink);padding-top:14px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 footer a{color:var(--blue)}
 
+.sw.mine{background:var(--amber);border-color:var(--amber)}
+.d.closed.mine{background:var(--amber)}
+.chip.scuola{background:var(--amber);color:var(--card)}
+.mine-box{background:var(--card);border:1.5px dashed var(--amber);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.mine-box p{margin:0;color:var(--ink-soft);font-size:14px;max-width:65ch}
+.mine-box label{display:flex;flex-direction:column;gap:4px;font-size:13px;font-weight:600;min-width:0}
+.mine-box input{font:inherit;font-size:15px;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:8px 10px;min-width:0;width:100%}
+.mine-box input:focus-visible{outline:3px solid var(--blue);outline-offset:1px}
+.mine-patrono{display:grid;grid-template-columns:minmax(0,220px);gap:10px}
+.mine-rows{display:flex;flex-direction:column;gap:10px}
+.mine-row{display:grid;grid-template-columns:minmax(0,170px) minmax(0,170px) minmax(0,1fr) auto;gap:10px;align-items:end}
+.mine-actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn-sec{font:inherit;font-size:14px;font-weight:600;color:var(--blue);background:transparent;border:1.5px solid var(--blue);border-radius:999px;padding:8px 14px;cursor:pointer}
+.btn-sec:hover{background:var(--blue-wash)}
+.btn-x{font:inherit;font-size:13px;color:var(--ink-soft);background:transparent;border:1px solid var(--line);border-radius:999px;padding:8px 12px;cursor:pointer}
+@media (max-width:620px){.mine-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.mine-row .lab{grid-column:1/-1}}
 @media (max-width:820px){.months{grid-template-columns:repeat(3,minmax(0,1fr))}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:520px){.months{grid-template-columns:repeat(2,minmax(0,1fr))}
   .item{grid-template-columns:1fr;gap:8px}.add{justify-self:start}}
@@ -147,11 +163,27 @@ footer a{color:var(--blue)}
       <div class="legend">
         <span><i class="sw open"></i>lezione</span>
         <span><i class="sw closed"></i>scuola chiusa</span>
+        <span><i class="sw mine"></i>data della tua scuola</span>
         <span><i class="sw we"></i>weekend</span>
         <span><i class="sw out"></i>fuori dall'anno</span>
       </div>
     </div>
     <div class="months" id="months"></div>
+  </section>
+
+  <section class="mine-box" aria-labelledby="mineTitle">
+    <h2 id="mineTitle">Le date della tua scuola</h2>
+    <p>Aggiungi la festa del santo patrono del tuo comune e i giorni in più decisi dalla tua scuola. Compaiono nel calendario e nell'elenco, pronti da mettere in agenda. Restano salvati solo su questo dispositivo.</p>
+    <div class="mine-patrono">
+      <label for="patrono">Festa del santo patrono
+        <input type="date" id="patrono" min="2026-09-01" max="2027-06-30">
+      </label>
+    </div>
+    <div class="mine-rows" id="extraRows"></div>
+    <div class="mine-actions">
+      <button type="button" class="btn-sec" id="addExtra">+ Aggiungi un giorno deciso dalla scuola</button>
+      <button type="button" class="btn-sec" id="dlMine" hidden>Scarica le mie date (.ics)</button>
+    </div>
   </section>
 
   <section>
@@ -230,6 +262,48 @@ let start="veneto";try{const s=localStorage.getItem("regione");if(s&&R[s])start=
 sel.value=start;
 sel.addEventListener("change",()=>{try{localStorage.setItem("regione",sel.value)}catch(e){}render()});
 
+let mine={patrono:"",extra:[]};
+try{const m=JSON.parse(localStorage.getItem("mieDate")||"null");if(m&&typeof m==="object"){mine.patrono=m.patrono||"";mine.extra=Array.isArray(m.extra)?m.extra:[]}}catch(e){}
+function saveMine(){try{localStorage.setItem("mieDate",JSON.stringify(mine))}catch(e){}}
+function mineItems(){
+  const out=[];
+  if(mine.patrono)out.push([mine.patrono,mine.patrono,"Festa del santo patrono","scuola"]);
+  mine.extra.forEach(x=>{if(!x.a)return;const b=x.b&&x.b>=x.a?x.b:x.a;out.push([x.a,b,(x.l||"").trim()||"Chiusura decisa dalla scuola","scuola"])});
+  return out;
+}
+const pat=document.getElementById("patrono");pat.value=mine.patrono;
+pat.addEventListener("change",()=>{mine.patrono=pat.value;saveMine();render()});
+function renderRows(){
+  const box=document.getElementById("extraRows");box.innerHTML="";
+  mine.extra.forEach((x,i)=>{
+    const row=document.createElement("div");row.className="mine-row";
+    row.innerHTML='<label for="ea'+i+'">Dal<input type="date" id="ea'+i+'" min="2026-09-01" max="2027-06-30"></label>'+
+      '<label for="eb'+i+'">Al (facoltativo)<input type="date" id="eb'+i+'" min="2026-09-01" max="2027-06-30"></label>'+
+      '<label class="lab" for="el'+i+'">Motivo<input type="text" id="el'+i+'" maxlength="60" placeholder="Es. ponte deciso dal consiglio d\'istituto"></label>';
+    const del=document.createElement("button");del.type="button";del.className="btn-x";del.textContent="Rimuovi";
+    del.addEventListener("click",()=>{mine.extra.splice(i,1);saveMine();renderRows();render()});
+    row.appendChild(del);box.appendChild(row);
+    const ea=row.querySelector("#ea"+i),eb=row.querySelector("#eb"+i),el=row.querySelector("#el"+i);
+    ea.value=x.a||"";eb.value=x.b||"";el.value=x.l||"";
+    ea.addEventListener("change",()=>{x.a=ea.value;saveMine();render()});
+    eb.addEventListener("change",()=>{x.b=eb.value;saveMine();render()});
+    el.addEventListener("input",()=>{x.l=el.value;saveMine();render()});
+  });
+}
+document.getElementById("addExtra").addEventListener("click",()=>{mine.extra.push({a:"",b:"",l:""});saveMine();renderRows();const n=mine.extra.length-1;const f=document.getElementById("ea"+n);if(f)f.focus()});
+const dl=document.getElementById("dlMine");
+dl.hidden=!(/github\.io$/.test(location.hostname)||location.hostname==="localhost");
+dl.addEventListener("click",()=>{
+  const ev=mineItems();if(!ev.length)return;
+  const nd=s=>iso(add(D(s),1)).replace(/-/g,"");
+  const L=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Federica Cannata//Quando e chiusa la scuola//IT","CALSCALE:GREGORIAN"];
+  ev.forEach(([a,b,t],i)=>L.push("BEGIN:VEVENT","UID:mie-"+a+"-"+i+"-"+Date.now()+"@quando-chiusa-la-scuola","DTSTAMP:"+new Date().toISOString().replace(/[-:]/g,"").slice(0,15)+"Z","DTSTART;VALUE=DATE:"+a.replace(/-/g,""),"DTEND;VALUE=DATE:"+nd(b),"SUMMARY:Scuola chiusa: "+t.replace(/[,;\\]/g," "),"TRANSP:TRANSPARENT","END:VEVENT"));
+  L.push("END:VCALENDAR");
+  const url=URL.createObjectURL(new Blob([L.join("\r\n")+"\r\n"],{type:"text/calendar"}));
+  const a=document.createElement("a");a.href=url;a.download="le-mie-date-scuola.ics";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);
+});
+renderRows();
+
 function render(){
   const r=R[sel.value];
   const icsUrl=new URL("ics/"+sel.value+".ics",location.href);
@@ -243,11 +317,15 @@ function render(){
   }
   const closed=new Set();
   r.c.forEach(([a,b])=>{for(let d=D(a);d<=D(b);d=add(d,1))closed.add(iso(d))});
+  const my=mineItems(),mySet=new Set();
+  my.forEach(([a,b])=>{for(let d=D(a);d<=D(b);d=add(d,1)){closed.add(iso(d));mySet.add(iso(d))}});
+  const all=[...r.c,...my];
+  dl.disabled=!my.length;
   const st=document.getElementById("status");
   st.className="status "+(r.ok?"ok":"check");st.textContent=r.ok?"✓ Fonte ufficiale":"Confermato da più fonti";
 
-  const totClosed=r.c.reduce((n,[a,b])=>n+weekdays(a,b),0);
-  const upcoming=r.c.map(c=>c).sort((x,y)=>x[0].localeCompare(y[0])).find(([a,b])=>D(b)>=today);
+  const totClosed=[...closed].filter(k=>k>=r.s&&k<=r.e&&D(k).getDay()%6!==0).length;const _unused=r.c.reduce((n,[a,b])=>n+weekdays(a,b),0);
+  const upcoming=all.map(c=>c).sort((x,y)=>x[0].localeCompare(y[0])).find(([a,b])=>D(b)>=today);
   let nextHtml='<span class="k">Prossima chiusura</span><span class="v">—</span><span class="s">Anno concluso</span>';
   if(upcoming){const days=Math.round((D(upcoming[0])-today)/864e5);
     nextHtml='<span class="k">Prossima chiusura</span><span class="v">'+range(upcoming[0],upcoming[1])+'</span><span class="s">'+upcoming[2]+(days>0?" · tra "+days+(days===1?" giorno":" giorni"):" · in corso")+'</span>'}
@@ -266,18 +344,18 @@ function render(){
     const last=new Date(y,mo+1,0).getDate();
     for(let d=1;d<=last;d++){
       const dt=new Date(y,mo,d),k=iso(dt),w=dt.getDay();let c="d";
-      if(k<r.s||k>r.e)c+=" out";else if(closed.has(k)&&w>0&&w<6)c+=" closed";else if(w===0||w===6)c+=" we";
+      if(k<r.s||k>r.e)c+=" out";else if(closed.has(k)&&w>0&&w<6)c+=" closed"+(mySet.has(k)&&!r.c.some(([a,b])=>k>=a&&k<=b)?" mine":"");else if(w===0||w===6)c+=" we";
       if(k===r.s||k===r.e)c+=" edge";
       if(dt.getTime()===today.getTime())c+=" today";
-      const tip=closed.has(k)?(r.c.find(([a,b])=>k>=a&&k<=b)||[])[2]:(k===r.s?"Primo giorno di scuola":k===r.e?"Ultimo giorno di scuola":"");
+      const tip=closed.has(k)?(all.find(([a,b])=>k>=a&&k<=b)||[])[2]:(k===r.s?"Primo giorno di scuola":k===r.e?"Ultimo giorno di scuola":"");
       h+='<span class="'+c+'"'+(tip?' title="'+tip+'"':'')+'>'+d+'</span>';
     }
     box.innerHTML=h+'</div>';m.appendChild(box);
   }
 
-  const items=[[r.s,r.s,"Primo giorno di scuola","lezioni"],...r.c,[r.e,r.e,"Ultimo giorno di scuola","lezioni"]].sort((a,b)=>a[0].localeCompare(b[0]));
+  const items=[[r.s,r.s,"Primo giorno di scuola","lezioni"],...all,[r.e,r.e,"Ultimo giorno di scuola","lezioni"]].sort((a,b)=>a[0].localeCompare(b[0]));
   const L=document.getElementById("list");L.innerHTML="";
-  const lab={vacanza:"vacanza",ponte:"ponte",festa:"festa",lezioni:"lezioni"};
+  const lab={vacanza:"vacanza",ponte:"ponte",festa:"festa",lezioni:"lezioni",scuola:"tua scuola"};
   items.forEach(([a,b,t,k])=>{
     const li=document.createElement("li");li.className="item"+(D(b)<today?" past":"");
     const wd=weekdays(a,b);
@@ -292,8 +370,9 @@ function render(){
   n+='<li>'+(r.ok||SEC)+'</li>';
   if(r.inf)n+='<li>'+r.inf+'</li>';else n+='<li>Scuola dell\'infanzia: di solito chiude più tardi (in genere il 30 giugno 2027).</li>';
   if(r.x)n+='<li>'+r.x+'</li>';
-  n+='<li>Manca la <b>festa del santo patrono</b> del tuo comune: è un giorno di chiusura in più.</li>';
-  n+='<li>Ogni scuola può spostare alcuni giorni (ponti in più, recuperi). Il calendario del tuo istituto ha sempre l\'ultima parola.</li></ul>';
+  if(!mine.patrono)n+='<li>Manca la <b>festa del santo patrono</b> del tuo comune: aggiungila nel riquadro "Le date della tua scuola".</li>';
+  n+='<li>Ogni scuola può decidere alcuni giorni in autonomia (ponti in più, recuperi): aggiungili nello stesso riquadro. Il calendario del tuo istituto ha sempre l\'ultima parola.</li>';
+  n+='<li>Il calendario a cui ti iscrivi contiene solo le date della Regione. Le date della tua scuola aggiungile con i pulsanti "+ Google Calendar" nell\'elenco'+(dl.hidden?'.':' oppure con "Scarica le mie date (.ics)".')+'</li></ul>';
   document.getElementById("notes").innerHTML=n;
 }
 render();
@@ -305,7 +384,10 @@ render();
 function gc(p){try{if(window.goatcounter&&window.goatcounter.count)window.goatcounter.count({path:p,title:p,event:true})}catch(e){}}
 var sel=document.getElementById("region");
 sel.addEventListener("change",function(){gc("regione/"+sel.value)});
-document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a");if(!a)return;var r=sel.value;
+var pt=document.getElementById("patrono");if(pt)pt.addEventListener("change",function(){if(pt.value)gc("mie-date/patrono")});
+document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a,button");if(!a)return;var r=sel.value;
+ if(a.id==="addExtra"){gc("mie-date/aggiungi-giorno");return}
+ if(a.id==="dlMine"){gc("mie-date/scarica-ics");return}
  if(a.id==="subGoogle")gc("iscrizione/google/"+r);
  else if(a.id==="subApple")gc("iscrizione/apple-outlook/"+r);
  else if(a.id==="subFile")gc("scarica-ics/"+r);
