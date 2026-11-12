@@ -197,7 +197,7 @@ footer a{color:var(--blue)}
   <div class="notes" id="notes"></div>
 
   <footer>
-    <span>Un'idea di <a href="https://www.federicacannata.it" target="_blank" rel="noopener">Federica Cannata</a> · consulente organizzativa e formatrice</span>
+    <span>Un'idea di <a href="https://www.federicacannata.it" target="_blank" rel="noopener">Federica Cannata</a>, consulente organizzativa e formatrice. <a href="https://www.instagram.com/federicacannata.it/" target="_blank" rel="noopener">Seguimi su Instagram</a></span>
     <span>Fonti: delibere regionali e calendari pubblicati (vedi nota sopra)</span>
   </footer>
 </div>
@@ -392,6 +392,8 @@ document.addEventListener("click",function(e){var a=e.target.closest&&e.target.c
  else if(a.id==="subApple")gc("iscrizione/apple-outlook/"+r);
  else if(a.id==="subFile")gc("scarica-ics/"+r);
  else if(a.classList.contains("add"))gc("evento-singolo/"+r);
+ else if(/instagram.com/.test(a.href))gc("click/instagram");
+ else if(/federicacannata.it/.test(a.href))gc("click/sito");
 });
 })();
 </script>
