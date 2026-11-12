@@ -109,17 +109,18 @@ footer a{color:var(--blue)}
 .sum-main{font-weight:700;color:var(--amber);font-size:16px}
 .sum-sub{color:var(--ink-soft);font-size:14px}
 .mine-body{display:flex;flex-direction:column;gap:12px;margin-top:12px}
+.mine-box *,.mine-box *::before,.mine-box *::after{box-sizing:border-box}
 .mine-box p{margin:0;color:var(--ink-soft);font-size:14px;max-width:65ch}
 .mine-box label{display:flex;flex-direction:column;gap:4px;font-size:13px;font-weight:600;min-width:0}
 .mine-box input{font:inherit;font-size:15px;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:8px 10px;min-width:0;width:100%}
 .mine-box input:focus-visible{outline:3px solid var(--blue);outline-offset:1px}
 .mine-patrono{display:grid;grid-template-columns:minmax(0,220px);gap:10px}
 .mine-rows{display:flex;flex-direction:column;gap:10px}
-.mine-row{display:grid;grid-template-columns:minmax(0,170px) minmax(0,170px) minmax(0,1fr) auto;gap:10px;align-items:end}
+.mine-row{display:grid;grid-template-columns:minmax(0,180px) minmax(0,180px) minmax(0,1fr) auto;gap:12px;align-items:end}
 .mine-actions{display:flex;gap:10px;flex-wrap:wrap}
 .btn-sec{font:inherit;font-size:14px;font-weight:600;color:var(--blue);background:transparent;border:1.5px solid var(--blue);border-radius:999px;padding:8px 14px;cursor:pointer}
 .btn-sec:hover{background:var(--blue-wash)}
-.btn-x{font:inherit;font-size:13px;color:var(--ink-soft);background:transparent;border:1px solid var(--line);border-radius:999px;padding:8px 12px;cursor:pointer}
+.btn-x{justify-self:start;font:inherit;font-size:13px;color:var(--ink-soft);background:transparent;border:1px solid var(--line);border-radius:999px;padding:8px 12px;cursor:pointer}
 @media (max-width:620px){.mine-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.mine-row .lab{grid-column:1/-1}}
 @media (max-width:820px){.months{grid-template-columns:repeat(3,minmax(0,1fr))}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:520px){.months{grid-template-columns:repeat(2,minmax(0,1fr))}
