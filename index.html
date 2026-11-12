@@ -282,7 +282,6 @@ function mineItems(){
   return out;
 }
 const pat=document.getElementById("patrono");pat.value=mine.patrono;
-if(mine.patrono||mine.extra.some(x=>x.a))document.getElementById("mineDetails").open=true;
 pat.addEventListener("change",()=>{mine.patrono=pat.value;saveMine();render()});
 function renderRows(){
   const box=document.getElementById("extraRows");box.innerHTML="";
